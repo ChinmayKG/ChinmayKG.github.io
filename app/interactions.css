@@ -1,0 +1,555 @@
+/* Interaction layer: all original dimensions, colors and typography remain in globals.css. */
+.magnetic-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: inherit;
+  pointer-events: none;
+}
+.hero {
+  isolation: isolate;
+}
+.hero::before {
+  display: none;
+}
+.hero-blueprint {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(#42627207 1px, transparent 1px),
+    linear-gradient(90deg, #42627207 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.blueprint-inspection {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.hero-copy,
+.robot-stage {
+  position: relative;
+}
+.hero h1 > span {
+  display: block;
+}
+.registered-text {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+.robot-cursor-dot,
+.robot-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 90;
+}
+.robot-cursor-dot::after {
+  content: "";
+  position: absolute;
+  left: -1.5px;
+  top: -1.5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--cyan);
+}
+.robot-cursor-ring > span {
+  position: absolute;
+  left: -13px;
+  top: -13px;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #00e5ff55;
+  border-radius: 50%;
+}
+.robot-cursor-ring i {
+  position: absolute;
+  background: #00e5ff77;
+}
+.robot-cursor-ring i:nth-child(1) {
+  width: 6px;
+  height: 1px;
+  left: -4px;
+  top: 12px;
+}
+.robot-cursor-ring i:nth-child(2) {
+  width: 6px;
+  height: 1px;
+  right: -4px;
+  top: 12px;
+}
+.robot-cursor-ring i:nth-child(3) {
+  width: 1px;
+  height: 6px;
+  left: 12px;
+  top: -4px;
+}
+.robot-cursor-ring i:nth-child(4) {
+  width: 1px;
+  height: 6px;
+  left: 12px;
+  bottom: -4px;
+}
+.robot-joint {
+  cursor: crosshair;
+  outline: none;
+}
+.robot-joint text,
+.joint-leader {
+  transition:
+    fill 0.2s,
+    stroke 0.2s;
+}
+.robot-joint:focus-visible > circle:last-child {
+  stroke: #00e5ff;
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+.signal-label {
+  position: relative;
+}
+.signal-label b {
+  font: inherit;
+  color: var(--muted);
+}
+.signal-rule {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 54px;
+  height: 1px;
+  background: #00e5ff40;
+  transform-origin: left;
+}
+.signal-label .registered-text {
+  color: inherit;
+  margin: 0;
+}
+.signal-timeline {
+  position: relative;
+}
+.timeline-track {
+  position: absolute;
+  left: -13px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--line);
+}
+.timeline-track > i {
+  position: absolute;
+  inset: 0;
+  background: var(--cyan);
+  transform-origin: top;
+  opacity: 0.55;
+}
+.experience-signal-node {
+  position: absolute;
+  left: -17px;
+  top: 39px;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #00b8cc;
+  border-radius: 50%;
+  z-index: 1;
+}
+.experience-item + .experience-item {
+  margin-top: 25px;
+}
+.project-card {
+  position: relative;
+  isolation: isolate;
+}
+.card-pointer-light {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.project-visual > .schematic-mark,
+.project-visual > .chart,
+.project-visual > img {
+  translate: var(--image-x, 0px) var(--image-y, 0px);
+  transition: translate 0.16s ease-out;
+}
+.project-visual > img {
+  scale: 1.025;
+}
+.project-category > .registered-text {
+  translate: var(--number-x, 0px) 0;
+  transition: translate 0.18s ease-out;
+}
+.project-card:hover .status > span {
+  animation: status-acquire 0.6s ease-out 1;
+}
+@keyframes status-acquire {
+  50% {
+    box-shadow: 0 0 0 4px #00e5ff18;
+    opacity: 1;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+.scan-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+.scan-cover {
+  position: absolute;
+  inset: 0;
+  background: var(--surface);
+  transform-origin: bottom;
+}
+.scan-tracer {
+  position: absolute;
+  inset: 0;
+  border-bottom: 1px solid #00e5ff;
+  pointer-events: none;
+}
+.project-metrics > .count-metric {
+  display: inline-block;
+}
+.project-metrics .count-metric > span {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: inherit;
+}
+.count-metric {
+  font-variant-numeric: tabular-nums;
+}
+.tech-tag {
+  position: relative;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+}
+.tag-indicator {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  background: var(--cyan);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.4);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.tech-tag:hover,
+.tech-tag:focus-visible {
+  color: #c7edf3;
+  border-color: #00e5ff60;
+}
+.tech-tag:hover .tag-indicator,
+.tech-tag:focus-visible .tag-indicator {
+  opacity: 0.8;
+  transform: translateY(-50%) scale(1);
+}
+.skill-technology {
+  cursor: default;
+  outline-offset: 3px;
+}
+.skill-tags[data-node-active="true"]
+  .skill-technology:not([data-active="true"]) {
+  opacity: 0.55;
+}
+.skill-descriptor {
+  min-height: 1.65em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.skill-node::before {
+  display: none;
+}
+.skill-connector {
+  position: absolute;
+  left: 50%;
+  top: -31px;
+  width: 1px;
+  height: 30px;
+  background: #34545f;
+  transform-origin: top;
+  overflow: hidden;
+}
+.skill-connector > i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 5px;
+  background: #00d7e8;
+  animation: vertical-data 6s linear infinite;
+  animation-play-state: paused;
+}
+.skill-node[data-signal-running="true"] .skill-connector > i {
+  animation-play-state: running;
+}
+.skill-node:nth-child(2) .skill-connector > i {
+  animation-delay: 1.5s;
+}
+.skill-node:nth-child(3) .skill-connector > i {
+  animation-delay: 3s;
+}
+.skill-node:nth-child(4) .skill-connector > i {
+  animation-delay: 4.5s;
+}
+@keyframes vertical-data {
+  0%,
+  20% {
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.55;
+  }
+  65% {
+    opacity: 0.55;
+  }
+  80%,
+  100% {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+}
+.architecture-hub > span:not(.hub-label) {
+  position: relative;
+  transform-origin: right;
+  overflow: hidden;
+}
+.architecture-hub > span:last-child {
+  transform: none;
+  transform-origin: left;
+  background: linear-gradient(90deg, #416979, transparent);
+}
+.architecture-hub > span:not(.hub-label)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent calc(100% - 14px), #00e5ff);
+  animation: horizontal-data 6s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.architecture-hub[data-signal-running="true"] > span::after {
+  animation-play-state: running;
+}
+.architecture-hub > span:last-child::after {
+  animation-delay: 3s;
+}
+@keyframes horizontal-data {
+  0%,
+  15% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0.4;
+  }
+  90%,
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+.system-progress {
+  position: fixed;
+  right: 10px;
+  top: 42%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.system-progress > span {
+  writing-mode: vertical-rl;
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #78929e;
+}
+.system-progress > div {
+  height: 125px;
+  width: 1px;
+  background: #2b424c;
+}
+.system-progress i {
+  display: block;
+  width: 1px;
+  height: 100%;
+  background: var(--cyan);
+  transform-origin: top;
+}
+.navbar nav a {
+  position: relative;
+  transition: color 0.25s;
+}
+.nav-active-signal {
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #00e5ff;
+  opacity: 0.7;
+}
+.socials a svg,
+.contact-links a svg,
+.details-link svg,
+.button svg {
+  transition: transform 0.2s;
+}
+.socials a:hover svg {
+  transform: translateY(-2px);
+}
+.details-link:hover svg,
+.contact-links a:hover svg:last-child {
+  transform: translateX(3px);
+}
+.contact-links a span {
+  position: relative;
+}
+.contact-links a span::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #00e5ff60;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s;
+}
+.contact-links a:hover span::after {
+  transform: scaleX(1);
+}
+button:active,
+.icon-button:active {
+  scale: 0.98;
+}
+.terminal-output {
+  overflow-wrap: anywhere;
+}
+.terminal-output p {
+  line-height: 1.8;
+}
+.terminal-output p > span.caret {
+  margin: 0;
+  color: var(--cyan);
+}
+[data-motion-visible="false"] .led,
+[data-motion-visible="false"] .caret,
+[data-motion-visible="false"] .skill-connector > i,
+[data-motion-visible="false"] .architecture-hub > span::after,
+[data-page-hidden="true"] .led,
+[data-page-hidden="true"] .caret,
+[data-page-hidden="true"] .skill-connector > i,
+[data-page-hidden="true"] .architecture-hub > span::after {
+  animation-play-state: paused !important;
+}
+@media (max-width: 1200px) {
+  .skill-node:nth-child(n + 3) .skill-connector {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .system-progress,
+  .robot-cursor-dot,
+  .robot-cursor-ring,
+  .blueprint-inspection {
+    display: none;
+  }
+  .hero-blueprint {
+    background: none;
+  }
+  .hero .robot-stage svg g[style] {
+    transform: none !important;
+  }
+  .timeline-track {
+    left: -9px;
+  }
+  .experience-signal-node {
+    left: -13px;
+    top: 28px;
+  }
+  .skill-connector {
+    display: none;
+  }
+  .skill-descriptor {
+    font-size: 9px;
+  }
+  .nav-active-signal {
+    bottom: 5px;
+    left: 8px;
+    right: auto;
+    width: 25px;
+  }
+  .terminal-output {
+    font-size: 10px;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .robot-cursor-dot,
+  .robot-cursor-ring {
+    display: none;
+  }
+  .project-visual > .schematic-mark,
+  .project-visual > .chart,
+  .project-visual > img,
+  .project-category > .registered-text {
+    translate: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .robot-cursor-dot,
+  .robot-cursor-ring,
+  .blueprint-inspection,
+  .scan-overlay {
+    display: none !important;
+  }
+  .hero-copy,
+  .hero-blueprint,
+  .robot-stage,
+  .project-card,
+  .magnetic-content,
+  [data-magnetic] {
+    transform: none !important;
+  }
+  .project-visual > img {
+    scale: 1;
+  }
+  .project-visual > .schematic-mark,
+  .project-visual > .chart,
+  .project-visual > img,
+  .project-category > .registered-text {
+    translate: none !important;
+  }
+  button:active,
+  .icon-button:active {
+    scale: 1;
+  }
+  .skill-connector > i {
+    opacity: 0;
+  }
+  .signal-rule {
+    transform: none !important;
+  }
+}
