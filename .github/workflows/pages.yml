@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -13,18 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Preserve previous design and import update
-        if: hashFiles('portfolio-source.zip') != ''
-        run: |
-          unzip -o portfolio-source.zip
-          rm portfolio-source.zip
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .
-          git commit -m 'Refine portfolio typography, education cards, project stories, and robot geometry'
-          git push
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
