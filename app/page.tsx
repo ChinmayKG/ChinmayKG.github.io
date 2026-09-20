@@ -7,9 +7,6 @@ import {
   Linkedin,
   Mail,
   ScanFace,
-  Award,
-  GraduationCap,
-  Trophy,
   ArrowUp,
 } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -22,6 +19,7 @@ import {
   SignalLabel,
 } from "@/components/motion/Interactions";
 import Hero from "@/components/sections/Hero";
+import Education from "@/components/sections/Education";
 import Projects from "@/components/sections/Projects";
 import {
   Reveal,
@@ -36,8 +34,6 @@ import {
   projects,
   experiences,
   skills,
-  education,
-  courses,
   extracurricular,
 } from "@/data/portfolio";
 export default function Page() {
@@ -156,85 +152,14 @@ export default function Page() {
             </div>
           </Reveal>
         </section>
-        <section id="achievements" className="section milestones-section">
-          <div className="container">
-            <Reveal>
-              <SectionHeader
-                number="06"
-                label="MILESTONES"
-                title="Signals along the way."
-              />
-              <div className="milestones">
-                {[
-                  {
-                    icon: Trophy,
-                    title: "CodeCure AI Hackathon",
-                    label: "FINALIST",
-                    text: "Organised by IIT BHU · April 2026",
-                  },
-                  {
-                    icon: Award,
-                    title: "Dakshana Foundation",
-                    label: "MERIT SCHOLARSHIP",
-                    text: "Awarded a merit-based scholarship",
-                  },
-                  {
-                    icon: GraduationCap,
-                    title: "Jawahar Navodaya Vidyalaya",
-                    label: "JNVST SELECTION",
-                    text: "Selected through the national entrance test",
-                  },
-                ].map((a) => (
-                  <article key={a.title}>
-                    <a.icon size={25} strokeWidth={1.3} />
-                    <p className="mono accent">{a.label}</p>
-                    <h3>{a.title}</h3>
-                    <p className="muted">{a.text}</p>
-                  </article>
-                ))}
-              </div>
-            </Reveal>
-          </div>
-        </section>
         <section id="education" className="section container">
           <Reveal>
             <SectionHeader
-              number="07"
+              number="06"
               label="EDUCATION LOG"
               title="The foundations."
             />
-            <Timeline className="education-timeline">
-              {education.map((e, i) => (
-                <article key={e.institution}>
-                  <span className="timeline-dot" />
-                  <p className="mono accent">{e.date}</p>
-                  <h3>{e.institution}</h3>
-                  <p className="muted">{e.qualification}</p>
-                  <span className="education-result">{e.result}</span>
-                  {i === 0 && (
-                    <span className="mono education-current">IN PROGRESS</span>
-                  )}
-                </article>
-              ))}
-            </Timeline>
-            <div className="course-section">
-              <div className="compact-heading">
-                <span className="mono muted">KNOWLEDGE BASE</span>
-                <h3>Relevant coursework</h3>
-              </div>
-              <div className="course-grid">
-                {courses.map((c) => (
-                  <div key={c.title}>
-                    <h4>{c.title}</h4>
-                    <ul>
-                      {c.items.map((t) => (
-                        <li key={t}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Education />
             <div className="beyond-section">
               <div className="compact-heading">
                 <span className="mono muted">OUTSIDE THE LAB</span>
@@ -251,7 +176,7 @@ export default function Page() {
         <section id="contact" className="section contact-section">
           <div className="container">
             <Reveal>
-              <SignalLabel number="08" label="ESTABLISH CONNECTION" />
+              <SignalLabel number="07" label="ESTABLISH CONNECTION" />
               <div className="contact-grid">
                 <div>
                   <h2>

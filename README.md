@@ -10,7 +10,7 @@ Use Node.js 20.9+ and pnpm. Run `pnpm install --ignore-scripts`, then `pnpm dev`
 - `pnpm typecheck` — TypeScript checks (run after `pnpm build` on a fresh checkout to generate Next.js route types)
 - `pnpm build` — production build and static export to `out/`
 
-Deploy `out/` to a static host, or publish through the included GitHub Pages workflow. No server, API keys or environment variables are needed.
+Deploy `out/` to a static host, or use the included Sites manifest. No server, API keys or environment variables are needed.
 
 ## Content and assets
 
@@ -52,14 +52,10 @@ Desktop tracking uses small spring-damped offsets. Mobile retains shorter scroll
 Run `pnpm test` for the component integration test covering pointer bounds, render stability, scan registration, reduced motion, mobile/coarse pointers and listener cleanup. Browser QA also covers responsive navigation, project filters and native detail dialogs.
 
 
-## GitHub Pages
+## Education sources and images
 
-This copy is prepared for the public repository `ChinmayKG/ChinmayKG.github.io`.
-Its intended URL is `https://chinmaykg.github.io/` after deployment succeeds.
-Create the repository without initial files, upload this folder's contents (including
-`.github/workflows/pages.yml`), and select **Settings > Pages > Source > GitHub Actions**.
-Every push to `main` checks and rebuilds the site before publishing. No personal access
-token or additional deployment secrets belong in this repository.
+The institution dialogs use IIT Bombay's official overview (https://www.iitb.ac.in/about-iit-bombay), Dakshana's programme overview (https://www.dakshana.org/coe-jnv-bu-classroom/), and the CBSE Gajanur school record (https://saras.cbse.gov.in/SARAS/AffiliatedList/AfflicationDetails/840006). The two-year training is Chinmay's supplied biographical detail.
 
-The repository name is significant: this build uses root-relative asset URLs.
-For a different repository name, configure Next.js basePath and public asset paths first.
+IIT Bombay emblem: https://www.iitb.ac.in/sites/default/files/IITBLogo.png. Shared JNV emblem: https://en.wikipedia.org/wiki/File:Jawahar_Navodaya_Vidyalaya_logo.png (used to identify the two Navodaya institutions; no school-specific emblem implied). Project illustrations were supplied by Chinmay. They are visual representations, not independently verified photographs or performance results.
+
+The hero gripper uses a planar inverse-kinematics solver with a bounded reachable workspace and spring damping. Its joint markers follow the solved geometry. Mobile and reduced-motion preferences disable cursor tracking.

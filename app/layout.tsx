@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./interactions.css";
+import "./education.css";
 import { MotionSystemProvider } from "@/components/motion/MotionSystem";
 export const metadata: Metadata = {
   title: "Chinmay KG | Robotics & Mechanical Engineering",

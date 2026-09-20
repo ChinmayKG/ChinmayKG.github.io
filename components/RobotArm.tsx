@@ -1,7 +1,13 @@
 "use client";
-import { useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  motion,
+  useMotionTemplate,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { spring, useMotionSystem } from "./motion/MotionSystem";
+import { solveArm, armPoints } from "./motion/armKinematics";
 import { CountMetric } from "./motion/Interactions";
 export default function RobotArm() {
   const s = useMotionSystem();
@@ -9,10 +15,50 @@ export default function RobotArm() {
   const dx = useSpring(s.heroX, spring),
     dy = useSpring(s.heroY, spring);
   const standby = useTransform(s.heroScroll, [0, 0.12, 0.5, 1], [0, 0, 1, 1]);
-  const base = useTransform(dx, (v) => v * 3);
-  const shoulder = useTransform(() => dx.get() * 2 + standby.get() * 3);
-  const elbow = useTransform(() => dy.get() * 3 - standby.get() * 5);
-  const wrist = useTransform(() => dy.get() * 4 + standby.get() * 3);
+  const svg = useRef<SVGSVGElement>(null);
+  const pose = useTransform(() => {
+    const x = s.x.get(),
+      y = s.y.get();
+    if (!s.fine || !s.heroPresence.get())
+      return { shoulder: 0, elbow: 0, wrist: 0 };
+    const box = svg.current?.getBoundingClientRect();
+    if (!box?.width || !box.height) return { shoulder: 0, elbow: 0, wrist: 0 };
+    const scale = Math.min(box.width / 600, box.height / 560);
+    return solveArm(
+      (x - box.left - (box.width - scale * 600) / 2) / scale,
+      (y - box.top - (box.height - scale * 560) / 2) / scale,
+    );
+  });
+  const base = 0;
+  const trackingSpring = { stiffness: 85, damping: 23, mass: 0.8 };
+  const shoulder = useSpring(
+    useTransform(() => pose.get().shoulder + standby.get() * 3),
+    trackingSpring,
+  );
+  const elbow = useSpring(
+    useTransform(() => pose.get().elbow - standby.get() * 5),
+    trackingSpring,
+  );
+  const wrist = useSpring(
+    useTransform(() => pose.get().wrist + standby.get() * 3),
+    trackingSpring,
+  );
+  const points = useTransform(() =>
+    armPoints(
+      s.reduced || s.compact ? 0 : shoulder.get(),
+      s.reduced || s.compact ? 0 : elbow.get(),
+      s.reduced || s.compact ? 0 : wrist.get(),
+    ),
+  );
+  const j2x = useTransform(points, (p) => p.j2.x),
+    j2y = useTransform(points, (p) => p.j2.y);
+  const j3x = useTransform(points, (p) => p.j3.x),
+    j3y = useTransform(points, (p) => p.j3.y);
+  const tipX = useTransform(points, (p) => p.tip.x),
+    tipY = useTransform(points, (p) => p.tip.y);
+  const j2path = useMotionTemplate`M${j2x} ${j2y}L149 265l-25-29H72`;
+  const j3path = useMotionTemplate`M${j3x} ${j3y}L381 86h84`;
+  const tipPath = useMotionTemplate`M${tipX} ${tipY}L529 218v62`;
   const robotX = useTransform(dx, (v) => v * 8);
   const robotY = useTransform(() => dy.get() * 8 - s.heroScroll.get() * 32);
   const labelX = useTransform(dx, (v) => v * 4),
@@ -51,6 +97,7 @@ export default function RobotArm() {
         </span>
       </motion.div>
       <svg
+        ref={svg}
         viewBox="0 0 600 560"
         fill="none"
         aria-label="Decorative manipulator simulation"
@@ -258,7 +305,9 @@ export default function RobotArm() {
               y: 265,
               lx: 69,
               ly: 224,
-              path: "M249 265H149l-25-29H72",
+              path: j2path,
+              px: j2x,
+              py: j2y,
             },
             {
               id: "J3",
@@ -267,7 +316,9 @@ export default function RobotArm() {
               y: 114,
               lx: 425,
               ly: 74,
-              path: "M381 114V86h84",
+              path: j3path,
+              px: j3x,
+              py: j3y,
             },
             {
               id: "EE",
@@ -276,7 +327,9 @@ export default function RobotArm() {
               y: 218,
               lx: 472,
               ly: 299,
-              path: "M468 218h61v62",
+              path: tipPath,
+              px: tipX,
+              py: tipY,
             },
           ].map((j) => (
             <g
@@ -298,7 +351,7 @@ export default function RobotArm() {
                 }
               }}
             >
-              <path
+              <motion.path
                 d={j.path}
                 stroke={joint === j.id ? "#00e5ff" : "#53828d"}
                 strokeWidth=".8"
@@ -314,16 +367,16 @@ export default function RobotArm() {
                 {j.label}
               </text>
               <motion.circle
-                cx={j.x}
-                cy={j.y}
+                cx={j.px ?? j.x}
+                cy={j.py ?? j.y}
                 r="3"
                 fill="#00e5ff"
                 animate={{ r: joint === j.id && !s.reduced ? 5 : 3 }}
                 transition={{ duration: 0.2 }}
               />
               <motion.circle
-                cx={j.x}
-                cy={j.y}
+                cx={j.px ?? j.x}
+                cy={j.py ?? j.y}
                 r="10"
                 initial={{ opacity: 0 }}
                 fill="none"
@@ -336,9 +389,9 @@ export default function RobotArm() {
                 }
                 transition={{ duration: 0.65 }}
               />
-              <circle
-                cx={j.x}
-                cy={j.y}
+              <motion.circle
+                cx={j.px ?? j.x}
+                cy={j.py ?? j.y}
                 r="28"
                 fill="transparent"
                 stroke="none"

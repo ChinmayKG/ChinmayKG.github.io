@@ -186,8 +186,7 @@ export function ScrollProgress() {
     experience: "02 / EXPERIENCE",
     projects: "03 / PROJECTS",
     skills: "04 / SKILLS",
-    achievements: "05 / ACHIEVEMENTS",
-    education: "07 / EDUCATION",
+    education: "05 / EDUCATION",
     contact: "06 / CONTACT",
   };
   return (

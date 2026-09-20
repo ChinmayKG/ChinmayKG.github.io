@@ -87,6 +87,7 @@ require.extensions[".tsx"] = (module, filename) => {
   });
   module._compile(output.outputText, filename);
 };
+require.extensions[".ts"] = require.extensions[".tsx"];
 const React = require("react");
 const { act } = React;
 const { createRoot } = require("react-dom/client");
@@ -250,4 +251,39 @@ test("motion system: pointer bounds, reduced motion, mobile, one-shot registrati
   assert.equal(state.x.get(), finalX, "unmount removes pointer listeners");
   assert.equal(observers.size, 0, "all intersection observers disconnect");
   dom.window.close();
+});
+
+const {
+  solveArm,
+  armPoints,
+} = require("../components/motion/armKinematics.ts");
+test("arm inverse kinematics reaches the pointer direction throughout its workspace", () => {
+  for (const [x, y] of [
+    [50, 100],
+    [300, 55],
+    [550, 100],
+    [80, 350],
+    [550, 360],
+    [300, 408],
+    [-2000, 100],
+    [2000, -900],
+  ]) {
+    const pose = solveArm(x, y);
+    const p = armPoints(pose.shoulder, pose.elbow, pose.wrist);
+    assert.ok(Object.values(pose).every(Number.isFinite));
+    assert.ok(
+      Math.hypot(p.tip.x - pose.targetX, p.tip.y - pose.targetY) < 0.001,
+    );
+    assert.ok(Math.hypot(p.tip.x - 300, p.tip.y - 408) <= 360.001);
+  }
+  assert.ok(
+    armPoints(
+      ...["shoulder", "elbow", "wrist"].map((k) => solveArm(50, 180)[k]),
+    ).tip.x < 300,
+  );
+  assert.ok(
+    armPoints(
+      ...["shoulder", "elbow", "wrist"].map((k) => solveArm(550, 180)[k]),
+    ).tip.x > 300,
+  );
 });

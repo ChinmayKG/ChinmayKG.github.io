@@ -8,7 +8,7 @@ const links = [
   ["experience", "02", "Experience"],
   ["projects", "03", "Projects"],
   ["skills", "04", "Skills"],
-  ["achievements", "05", "Achievements"],
+  ["education", "05", "Education"],
   ["contact", "06", "Contact"],
 ];
 export default function Navigation({
@@ -26,7 +26,7 @@ export default function Navigation({
       },
       { rootMargin: "-15% 0px -65% 0px", threshold: 0 },
     );
-    ["home", "education", ...links.map(([id]) => id)].forEach((id) => {
+    ["home", ...links.map(([id]) => id)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
