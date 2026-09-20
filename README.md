@@ -1,4 +1,4 @@
-# Chinmay KG — Robotics Lab Portfolio
+# Chinmay K G — Robotics Lab Portfolio
 
 A responsive, statically exported Next.js / React / TypeScript portfolio with Tailwind CSS, Framer Motion and Lucide icons.
 
@@ -56,6 +56,13 @@ Run `pnpm test` for the component integration test covering pointer bounds, rend
 
 The institution dialogs use IIT Bombay's official overview (https://www.iitb.ac.in/about-iit-bombay), Dakshana's programme overview (https://www.dakshana.org/coe-jnv-bu-classroom/), and the CBSE Gajanur school record (https://saras.cbse.gov.in/SARAS/AffiliatedList/AfflicationDetails/840006). The two-year training is Chinmay's supplied biographical detail.
 
-IIT Bombay emblem: https://www.iitb.ac.in/sites/default/files/IITBLogo.png. Shared JNV emblem: https://en.wikipedia.org/wiki/File:Jawahar_Navodaya_Vidyalaya_logo.png (used to identify the two Navodaya institutions; no school-specific emblem implied). Project illustrations were supplied by Chinmay. They are visual representations, not independently verified photographs or performance results.
+IIT Bombay emblem: https://www.iitb.ac.in/sites/default/files/2025-05/IIT%20Bombay_Logo_JPG.jpg. Shared JNV emblem: https://en.wikipedia.org/wiki/File:Jawahar_Navodaya_Vidyalaya_logo.png (used to identify the two Navodaya institutions; no school-specific emblem implied). Project illustrations were supplied by Chinmay. They are visual representations, not independently verified photographs or performance results.
 
 The hero gripper uses a planar inverse-kinematics solver with a bounded reachable workspace and spring damping. Its joint markers follow the solved geometry. Mobile and reduced-motion preferences disable cursor tracking.
+
+
+## September 20 Visual Refresh
+The previous public version is GitHub commit `6c5d548`; see RESTORE.md. Local rollback archives are stored separately from the website source.
+Self-hosted Manrope, Space Grotesk, and Cormorant Garamond fonts use the included SIL Open Font Licenses in public/fonts.
+Geometric decorative motifs are inspired by Indian kolam and Japanese wave patterns.
+The robot uses shared link endpoints and overlaid joint hubs, with a cursor-responsive base marker and bounded inverse kinematics. Reduced-motion and touch layouts use a neutral pose.

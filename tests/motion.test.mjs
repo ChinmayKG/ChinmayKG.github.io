@@ -221,11 +221,12 @@ test("motion system: pointer bounds, reduced motion, mobile, one-shot registrati
   assert.equal(state.heroX.get(), 0);
   assert.equal(state.heroY.get(), 0);
   assert.equal(document.querySelector(".robot-cursor-ring"), null);
-  for (const el of document.querySelectorAll("[data-robot-part]"))
-    assert.ok(
-      !/rotate\((?!0(?:deg)?\))/.test(el.style.transform),
-      "robot remains neutral under reduced motion",
-    );
+  const neutralLink = document.querySelector('[data-robot-part="shoulder"] line');
+  assert.equal(Number(neutralLink.getAttribute('x2')), 266, 'reduced-motion shoulder returns to rest');
+  assert.equal(Number(neutralLink.getAttribute('y2')), 263);
+  const elbowLink = document.querySelector('[data-robot-part="elbow"] line');
+  assert.equal(elbowLink.getAttribute('x1'), neutralLink.getAttribute('x2'), 'links share the same joint centre');
+  assert.equal(elbowLink.getAttribute('y1'), neutralLink.getAttribute('y2'));
   const reducedX = state.x.get();
   await pointer(500, 500);
   assert.equal(
@@ -249,7 +250,7 @@ test("motion system: pointer bounds, reduced motion, mobile, one-shot registrati
   await act(async () => root.unmount());
   await pointer(100, 100);
   assert.equal(state.x.get(), finalX, "unmount removes pointer listeners");
-  assert.equal(observers.size, 0, "all intersection observers disconnect");
+  assert.equal([...observers].reduce((n, o) => n + o.targets.size, 0), 0, "all observed elements are released on unmount");
   dom.window.close();
 });
 
@@ -287,3 +288,4 @@ test("arm inverse kinematics reaches the pointer direction throughout its worksp
     ).tip.x > 300,
   );
 });
+

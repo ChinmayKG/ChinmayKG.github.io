@@ -1666,7 +1666,7 @@ nav a[aria-current] {
     font-size: clamp(52px, 17vw, 85px);
     letter-spacing: -4px;
   }
-  .hero .robot-stage svg g[style] {
+  .hero .robot-stage svg g[style]:not([data-robot-part="wrist"]) {
     transform: none !important;
   }
   .hero-actions .button {
@@ -1699,3 +1699,4 @@ nav a[aria-current] {
     gap: 14px;
   }
 }
+

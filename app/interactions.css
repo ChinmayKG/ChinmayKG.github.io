@@ -480,7 +480,7 @@ button:active,
   .hero-blueprint {
     background: none;
   }
-  .hero .robot-stage svg g[style] {
+  .hero .robot-stage svg g[style]:not([data-robot-part="wrist"]) {
     transform: none !important;
   }
   .timeline-track {
@@ -553,3 +553,4 @@ button:active,
     transform: none !important;
   }
 }
+
